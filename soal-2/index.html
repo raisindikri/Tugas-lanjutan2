@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<link rel="stylesheet" href="ext/css/bootstrap.min.css">
+<script src="ext/js/jquery-3.5.1.min.js"></script>
+<script src="ext/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+
+</head>
+<body >
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-danger" style="margin-top: 10px">
+  <a class="navbar-brand" href="#">DagangYuk!</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Tambah Produk</a>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Evaluasi
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="#">Tugas 1</a>
+          <a class="dropdown-item" href="#">Tugas 2</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#">Tugas Final</a>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Tugas Rahasia</a>
+      </li>
+    </ul>
+    <form class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+      <button class="btn btn-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+  </div>
+</nav>
+
+<nav aria-label="breadcrumb" style="margin-top: 15px">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="#">Home</a></li>
+    <li class="breadcrumb-item"><a href="#">Evaluasi</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Tugas 1</li>
+  </ol>
+</nav>
+
+
+<div id="message_alert"></div>
+    
+
+<div id="app">
+    <div class="card col-md-10" style="margin: auto;">
+      <div class="card-body" >
+          <h2>Tambah Kategori Dagangan</h2>
+          <input type="text" placeholder="Masukkan Kategori Dagangan" class="col-md-5" v-model:value="kat_dagang" />
+          <button class="btn btn-success" @click="addTask">Add</button>
+      </div>
+    </div>
+  <form>
+    <div class="card col-md-10" style="margin: auto; margin-top: 20px">
+      <div class="card-body">
+        <div>
+          <h2>Form Pendaftaran Pedagang</h2>
+          <p>Silahkan lengkapi form berikut ini</p>
+        </div>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label>Nama</label>
+              <input type="text" class="form-control">
+            </div>
+
+            <div class="form-group col-md-6">
+              <label>Alamat</label>
+              <input type="text" class="form-control">
+            </div>
+          </div>
+    
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label>Email</label>
+              <input type="email" class="form-control">
+            </div>
+
+            <div class="form-group col-md-6">
+              <label>HP</label>
+              <input type="tel" class="form-control">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group col-md-12">
+              <label>Kategori Dagangan</label>
+              <select id="inputState" class="form-control">
+
+                  <option v-for="kategori in loop_kat_dagang ">{{kategori.task}}</option>
+              </select>
+            </div>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group col-md-12">
+              <label>Saya ambil</label>
+              <input type="number" min="1" max="7" v-model:value="qty" />
+              kios, jadi <b>Totalnya Rp {{harga * qty}} </b>
+            </div>
+            <div class="form-group col-md-12 detail">
+
+              <p v-if="qty > 6 ">Maaf kamu hanya boleh ambil 6 kios aja yah.. Lapak terbatas bro!!! Tapi, kamu tetap bisa ikut undian rumah!!!</p>
+              <p v-else-if="qty == 5"><b>Whoaa...!!!</b> Anda berkesempatan ikut undian rumah!!!</p>
+              <p v-else-if="qty == 4"><b>Bungkus!</b> ambil voucher 300rb kamu dan sepasang payung cantik</p>
+              <p v-else-if="qty == 2"><b>Selamat!</b> Free Voucher Indomaret <i>{{qty}}</i> x 100rb, karena ambil <i>{{qty}}</i> kios</p>
+              <p v-else-if="qty == 3"><b>Selamat!</b> Free Voucher Indomaret <i>{{qty}}</i> x 100rb, karena ambil <i>{{qty}}</i> kios</p>
+              <p v-else>oke {{qty}} kios diambil</p>
+            </div>
+          </div>
+        <button type="reset" class="btn btn-secondary float-right">Batal </button>
+        <button type="submit" class="btn btn-primary float-right">Daftar</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<script>
+    var app = new Vue({
+      el: "#app",
+      data: {
+        kat_dagang: "",
+        loop_kat_dagang: [],
+        qty: 0,
+        harga: 15000
+      },
+      methods: {
+          addTask: function(){
+            this.loop_kat_dagang.push({'task':this.kat_dagang});
+            this.kat_dagang = "";
+            let pesan = '<div class="alert alert-success alert-dismissible" role="alert"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Kategori dagangan berhasil ditambahkan.</div>';
+
+             document.getElementById("message_alert").innerHTML = pesan;
+          }
+      }
+    })
+  </script>
+</body>
+</html>
