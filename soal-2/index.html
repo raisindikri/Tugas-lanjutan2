@@ -62,7 +62,7 @@
     <div class="card col-md-10" style="margin: auto;">
       <div class="card-body" >
           <h2>Tambah Kategori Dagangan</h2>
-          <input type="text" placeholder="Masukkan Kategori Dagangan" class="col-md-5" v-model:value="kat_dagang" />
+          <input type="text" placeholder="Masukkan Kategori Dagangan" class="col-md-5" v-model:value="jenis_dagang" />
           <button class="btn btn-success" @click="addTask">Add</button>
       </div>
     </div>
@@ -102,7 +102,7 @@
               <label>Kategori Dagangan</label>
               <select id="inputState" class="form-control">
 
-                  <option v-for="kategori in loop_kat_dagang ">{{kategori.task}}</option>
+                  <option v-for="kategori in loop_jenis_dagang ">{{kategori.task}}</option>
               </select>
             </div>
           </div>
@@ -134,15 +134,15 @@
     var app = new Vue({
       el: "#app",
       data: {
-        kat_dagang: "",
-        loop_kat_dagang: [],
+        jenis_dagang: "",
+        loop_jenis_dagang: [],
         qty: 0,
         harga: 15000
       },
       methods: {
           addTask: function(){
-            this.loop_kat_dagang.push({'task':this.kat_dagang});
-            this.kat_dagang = "";
+            this.loop_jenis_dagang.push({'task':this.jenis_dagang});
+            this.jenis_dagang = "";
             let pesan = '<div class="alert alert-success alert-dismissible" role="alert"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Kategori dagangan berhasil ditambahkan.</div>';
 
              document.getElementById("message_alert").innerHTML = pesan;
